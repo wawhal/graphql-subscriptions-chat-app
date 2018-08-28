@@ -13,7 +13,7 @@ export default class MessageList extends React.Component {
         {
           this.props.messages.map((m, i) => {
             return (
-              <div key={m.id} className={getStyleById(i)}>
+              <div key={m.id} className="message">
                 { m.username + ": " + m.text }
               </div>
             );

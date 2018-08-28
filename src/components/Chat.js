@@ -13,6 +13,26 @@ const subscribeToEvent = gql`
     } }
 `;
 
+const emitOnlineEvent = gql`
+  mutation ($userId: Int!){
+    insert_actions(objects: [
+      {
+        user_id: $userId,
+        last_seen: "now()"
+      }
+    ],
+      on_conflict: {
+        constraint: actions_user_id_key,
+        action: update
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 class Chat extends React.Component {
 
   constructor (props) {
@@ -31,6 +51,22 @@ class Chat extends React.Component {
     })
   }
 
+
+  async componentDidMount() {
+    // Emit and event saying the user is online every 10 seconds
+    setInterval(
+      async () => {
+        const resp = await this.props.client.mutate({
+          mutation: emitOnlineEvent,
+          variables: {
+            userId: this.props.userId
+          }
+        });
+        console.log(resp);
+      },
+      10000
+    );
+  }
 
   /*
     Subscription is used only for event notification
@@ -60,6 +96,7 @@ class Chat extends React.Component {
         <ChatWrapper
           refetch={refetch}
           setRefetch={this.setRefetch}
+          userId={this.props.userId}
           username={username}
         />
       </div>

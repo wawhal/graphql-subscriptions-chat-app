@@ -18,12 +18,45 @@ const insertMessage = gql`
   }
 `;
 
+const emitTypingEvent = gql`
+  mutation ($userId: Int!){
+    insert_actions(objects: [
+      {
+        user_id: $userId,
+        last_typed: "now()"
+      }
+    ],
+      on_conflict: {
+        constraint: actions_user_id_key,
+        action: update
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export default class Textbox extends React.Component {
 
   constructor(props) {
     super()
     this.state = {
       text: ""
+    }
+  }
+
+  emitTypingEvent = async (mutate) => {
+    console.log(this.props.userId);
+    if (this.props.userId) {
+      const resp = await mutate({
+        mutation: emitTypingEvent,
+        variables: {
+          userId: this.props.userId
+        }
+      });
+      console.log(resp);
     }
   }
 
@@ -50,7 +83,7 @@ export default class Textbox extends React.Component {
         }}
       >
         {
-          (insert_message, { data, loading, error, called}) => {
+          (insert_message, { data, loading, error, client}) => {
             if (loading) {
               return "";
             }
@@ -68,6 +101,7 @@ export default class Textbox extends React.Component {
                     className="textbox loginTextbox"
                     value={this.state.text}
                     autoFocus={true}
+                    onFocus={() => this.emitTypingEvent(client.mutate)}
                     onChange={(e) => {
                       this.setState({ text: e.target.value })
                     }}

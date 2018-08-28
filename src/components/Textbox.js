@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import TypingIndicator from './TypingIndicator';
 import '../App.css';
 
 const insertMessage = gql`
@@ -20,19 +21,19 @@ const insertMessage = gql`
 
 const emitTypingEvent = gql`
   mutation ($userId: Int!){
-    insert_actions(objects: [
+    insert_user_typing(objects: [
       {
         user_id: $userId,
         last_typed: "now()"
       }
     ],
       on_conflict: {
-        constraint: actions_user_id_key,
+        constraint: user_typing_pkey,
         action: update
       }
     ) {
       returning {
-        id
+        user_id
       }
     }
   }
@@ -96,6 +97,7 @@ export default class Textbox extends React.Component {
             return (
               <form onSubmit={sendMessage}>
                 <div className="textboxWrapper">
+                  <TypingIndicator userId={this.props.userId} />
                   <input
                     id="textbox"
                     className="textbox loginTextbox"

@@ -4,10 +4,7 @@ import '../App.css';
 export default class MessageList extends React.Component {
   render() {
     const { isNew } = this.props;
-    const getStyleById = (id) => {
-      const evenOrOdd = (id % 2 === 0) ? "Even" : "Odd";
-      return isNew ? `newMessage${evenOrOdd}` : `message${evenOrOdd}`;
-    }
+    
     return (
       <div className={isNew ? "messageWrapperNew" : "messageWrapper"}>
         {

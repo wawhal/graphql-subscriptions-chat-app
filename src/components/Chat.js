@@ -15,19 +15,19 @@ const subscribeToEvent = gql`
 
 const emitOnlineEvent = gql`
   mutation ($userId: Int!){
-    insert_actions(objects: [
+    insert_user_online(objects: [
       {
         user_id: $userId,
         last_seen: "now()"
       }
     ],
       on_conflict: {
-        constraint: actions_user_id_key,
+        constraint: user_online_pkey,
         action: update
       }
     ) {
       returning {
-        id
+        user_id
       }
     }
   }
@@ -64,7 +64,7 @@ class Chat extends React.Component {
         });
         console.log(resp);
       },
-      10000
+      5000
     );
   }
 

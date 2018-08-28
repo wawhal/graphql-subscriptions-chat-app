@@ -46,7 +46,7 @@ const OnlineUsers = (props) => {
               <ul className="userList">
                 {
                   data.user.map((u) => {
-                    return <li key={u.id}>u.username</li>
+                    return <li key={u.id}>{u.username}</li>
                   })
                 }
               </ul>

@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import TypingIndicator from './TypingIndicator';
 import '../App.css';
+import moment from 'moment';
 
 const insertMessage = gql`
   mutation insert_message ($message: message_insert_input! ){
@@ -49,7 +50,6 @@ export default class Textbox extends React.Component {
   }
 
   emitTypingEvent = async (mutate) => {
-    console.log(this.props.userId);
     if (this.props.userId) {
       const resp = await mutate({
         mutation: emitTypingEvent,
@@ -57,7 +57,6 @@ export default class Textbox extends React.Component {
           userId: this.props.userId
         }
       });
-      console.log(resp);
     }
   }
 
@@ -107,6 +106,7 @@ export default class Textbox extends React.Component {
                     onChange={(e) => {
                       this.setState({ text: e.target.value })
                     }}
+                    autoComplete="off"
                   />
                   <button
                     className="sendButton loginButton"

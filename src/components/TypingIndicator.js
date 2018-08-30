@@ -21,6 +21,7 @@ const getUserTyping = gql`
       limit: 1
     ){
       user_id
+      last_typed
       user {
         username
       }
@@ -29,28 +30,45 @@ const getUserTyping = gql`
 `;
 
 
-const TypingIndicator = (props) => {
-  return (
-    <Subscription
-      subscription={getUserTyping}
-      variables={{
-        timestamp: moment().subtract(5, 'seconds').format(),
-        selfId: props.userId
-      }}
-    >
-      {
-        ({ data, loading, error}) => {
-          if (loading) { return null; }
-          if (error) { return null; }
-          if (data.user_typing.length === 0 || data.user_id === props.userId ) {
-            return null;
-          } else {
-            return `${data.user.username} is typing ...`;
+class TypingIndicator extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      time: moment().subtract(2, 'seconds').format(),
+    }
+  }
+  componentDidMount() {
+    setInterval(
+      () => this.setState({ time: moment().subtract(2, 'seconds').format()}),
+      5000
+    );
+  }
+  render() {
+    return (
+      <div className="typingIndicator">
+        <Subscription
+          subscription={getUserTyping}
+          variables={{
+            timestamp: this.state.time,
+            selfId: this.props.userId
+          }}
+        >
+          {
+            ({ data, loading, error}) => {
+              if (loading) { return ""; }
+              if (error) { return ""; }
+              if (data.user_typing.length === 0 || data.user_id === this.props.userId ) {
+                return "";
+              } else {
+                return `${data.user_typing[0].user.username} is typing ...`;
+              }
+            }
           }
-        }
-      }
-    </Subscription>
-  )
+        </Subscription>
+      </div>
+    )
+  }
+  
 };
 
 

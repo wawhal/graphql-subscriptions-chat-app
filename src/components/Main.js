@@ -34,7 +34,6 @@ export default class Main extends React.Component {
 
   render() {
     const { username, isLoggedIn, userId } = this.state;
-    console.log(this.state.userId);
     // Login if not logged in and head to chat
     return (
       <div className="app">

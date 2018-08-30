@@ -37,12 +37,11 @@ const OnlineUsers = (props) => {
     >
       {
         ({data, error, loading}) => {
-          console.log(data);
           if (loading) { return "Loading"; }
           if (error) { return "Error loading online users"; }
           return (
             <div className="wd25 onlineUsers">
-              <p className="userListHeading"> Online Users </p>
+              <p className="userListHeading"> Online Users ({data.user.length})</p>
               <ul className="userList">
                 {
                   data.user.map((u) => {

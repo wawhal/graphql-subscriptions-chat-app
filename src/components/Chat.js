@@ -53,7 +53,7 @@ class Chat extends React.Component {
 
 
   async componentDidMount() {
-    // Emit and event saying the user is online every 10 seconds
+    // Emit and event saying the user is online every 5 seconds
     setInterval(
       async () => {
         const resp = await this.props.client.mutate({
@@ -62,7 +62,6 @@ class Chat extends React.Component {
             userId: this.props.userId
           }
         });
-        console.log(resp);
       },
       5000
     );

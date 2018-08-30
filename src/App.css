@@ -17,7 +17,7 @@ body
 
 .message {
   font-size: 16px;
-  background-color: #eee;
+  background-color: #fff;
   padding-left: 5px;
   margin: 20px;
   border-radius: 5px;
@@ -51,7 +51,6 @@ body
 .messageWrapper
 {
   height: 82vh;
-  padding-bottom: 15px;
   overflow: auto;
 }
 
@@ -65,13 +64,14 @@ body
   position: sticky;
   top: 0;
   align-self: flex-start;
-  background-color: green;
+  background-color: #20c40f;
   font-size: 18px;
   cursor: pointer;
   font-weight: 400;
   padding: 10px 0;
   text-align: center;
   font-family: 'raleway';
+  color: #fff;
 }
 
 .oldNewSeparator {
@@ -80,9 +80,10 @@ body
   margin-bottom: 15px;
 }
 
-.chatbox {
-  margin: 10px;
-  margin-bottom: 5px;
+#chatbox {
+  overflow: auto;
+  height: 100vh;
+  background-color: #f8f9f9;
 }
 
 .textboxWrapper {
@@ -90,7 +91,7 @@ body
   position: fixed;
   bottom: 0;
   width: 75%;
-  background-color: #eee;
+  background-color: #fff;
   padding: 1%;
 }
 
@@ -112,18 +113,38 @@ body
   width: 74%;
   margin-right: 1%;
   font-weight: 300;
-  border: 0px solid #ececec;
+  border: 1px solid #ececec;
   border-radius: 5px;
   padding: 0;
   padding-left: 10px;
   display: inline-block;
 
 }
-.loginTextbox:focus
+.typoTextbox
+{
+  font-size: 16px;
+  height: 43px;
+  width: 75%;
+  margin-right: 1%;
+  font-weight: 300;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  padding: 0;
+  padding-left: 10px;
+  display: inline-block;
+  background-color: #f6f6f7;
+}
+.loginTextbox:focus, .typoTextbox:focus
 {
   outline: none;
   border-color: #016d95;
 }
+.typoTextbox:focus
+{
+  outline: none;
+  border-color: #bbbdbd;
+}
+
 .loginButton {
   height: 45px;
   width: 21%;
@@ -133,6 +154,27 @@ body
   cursor: pointer;
   font-size: 16px;
   margin-right: 1%;
+}
+.typoButton
+{
+  height: 45px;
+  width: 20%;
+  display: inline-block;
+  border-radius: 5px;
+  background-color: #ffca27;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 1%;
+  border: 0;
+  color: #222;
+}
+.typoButton:hover
+{
+  background-color: #dba203;
+}
+.loginButton:focus, .typoButton:focus
+{
+  outline: none;
 }
 .loginButton:hover
 {
@@ -175,7 +217,7 @@ body
 }
 
 .onlineUsers {
-  background-color: #eee;
+  background-color: #4f5050;
   height: 100vh;
   overflow: auto;
 }
@@ -184,11 +226,16 @@ body
   width: 49%;
   display: inline-block;
 }
+.messageName
+{
+  color: #1d5d01;
+}
 .messsageTime
 {
   text-align: right;
   padding-right: 5px;
   font-size: 12px;
+  color: #01999b;
 }
 .userList {
   margin-top: 0;
@@ -198,8 +245,8 @@ body
 
 .userList li {
   padding: 10px;
-  border-bottom: 1px solid #fff;
-
+  border-bottom: 1px solid #444;
+  color: #fff;
 }
 
 .chatWrapper {
@@ -210,9 +257,10 @@ body
 .userListHeading {
   font-weight: 600;
   padding: 15px 10px;
-  border-bottom: 3px solid #fff;
   margin-top: 0;
   margin-bottom: 0;
+  background-color: #222;
+  color: #fff;
 }
 
 .typingIndicator {

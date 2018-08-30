@@ -79,7 +79,7 @@ export default class Textbox extends React.Component {
               username: insert_message.returning[0].username,
               text: insert_message.returning[0].text,
             }
-          ); 
+          );
         }}
       >
         {
@@ -99,7 +99,7 @@ export default class Textbox extends React.Component {
                   <TypingIndicator userId={this.props.userId} />
                   <input
                     id="textbox"
-                    className="textbox loginTextbox"
+                    className="textbox typoTextbox"
                     value={this.state.text}
                     autoFocus={true}
                     onFocus={() => this.emitTypingEvent(client.mutate)}
@@ -109,7 +109,7 @@ export default class Textbox extends React.Component {
                     autoComplete="off"
                   />
                   <button
-                    className="sendButton loginButton"
+                    className="sendButton typoButton"
                     onClick={sendMessage}
                   > Send </button>
                 </div>

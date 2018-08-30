@@ -11,7 +11,7 @@ body
 }
 
 .messageOdd {
-  font-size: 30px;
+  font-size: 18px;
   padding-left: 5px;
 }
 
@@ -38,18 +38,19 @@ body
 
 .newMessageEven {
 
-  font-size: 30px;
+  font-size: 18px;
   background-color: #98FB98;
   padding-left: 5px;
 }
 
 .newMessageOdd {
-  font-size: 30px;
+  font-size: 18px;
   background-color: #8FBC8F;
   padding-left: 5px;
 }
 .messageWrapper
 {
+  height: 82vh;
   padding-bottom: 15px;
   overflow: auto;
 }
@@ -65,15 +66,16 @@ body
   top: 0;
   align-self: flex-start;
   background-color: green;
-  font-size: 30px;
+  font-size: 18px;
   cursor: pointer;
+  font-weight: 400;
   padding: 10px 0;
   text-align: center;
   font-family: 'raleway';
 }
 
 .oldNewSeparator {
-  font-size: 40px;
+  font-size: 18px;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -124,7 +126,7 @@ body
 }
 .loginButton {
   height: 45px;
-  width: 22%;
+  width: 21%;
   display: inline-block;
   border-radius: 5px;
   background-color: 'green' !important;
@@ -174,9 +176,20 @@ body
 
 .onlineUsers {
   background-color: #eee;
+  height: 100vh;
   overflow: auto;
 }
-
+.messageName, .messsageTime
+{
+  width: 49%;
+  display: inline-block;
+}
+.messsageTime
+{
+  text-align: right;
+  padding-right: 5px;
+  font-size: 12px;
+}
 .userList {
   margin-top: 0;
   margin-bottom: 0;
@@ -192,7 +205,6 @@ body
 .chatWrapper {
   display: flex;
   height: 100vh;
-  overflow: auto;
 }
 
 .userListHeading {
@@ -206,5 +218,5 @@ body
 .typingIndicator {
   text-align: left;
   padding-bottom: 10px;
-  padding-left: 1%; 
+  padding-left: 1%;
 }

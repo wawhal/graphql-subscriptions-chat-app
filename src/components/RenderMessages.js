@@ -264,11 +264,6 @@ export default class RenderMessages extends React.Component {
           username={this.props.username}
         />
         { /* Bottom div to scroll to */}
-        <div
-          style={{ "height": 0 }}
-          id="lastMessage"
-        >
-        </div>
       </div>
     );
   }

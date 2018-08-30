@@ -28,6 +28,11 @@ export default class MessageList extends React.Component {
             );
           })
         }
+        <div
+          style={{ "height": 0 }}
+          id="lastMessage"
+        >
+        </div>
       </div>
     );
   }

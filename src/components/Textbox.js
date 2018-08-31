@@ -91,7 +91,8 @@ export default class Textbox extends React.Component {
       >
         {
           (insert_message, { data, loading, error, client}) => {
-            const sendMessage = () => {
+            const sendMessage = (e) => {
+              e.preventDefault();
               insert_message();
               this.setState({
                 text: ""

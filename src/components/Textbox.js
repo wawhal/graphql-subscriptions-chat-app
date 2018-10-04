@@ -16,7 +16,7 @@ export default class Textbox extends React.Component {
   handleTyping = (text, mutate) => {
     const textLength = text.length;
     if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
-      this.emitTypingEvent(mutate);
+      // this.emitTypingEvent(mutate);
     }
     this.setState({ text });
   }
@@ -27,7 +27,11 @@ export default class Textbox extends React.Component {
     // Mutation component. Add message to the state of <RenderMessages> after mutation.
     const sendMessage = (e) => {
       e.preventDefault();
-    /*Send message logic*/
+      // insert the chat message
+      // render the new chat message in the box
+      this.props.mutationCallback({text: this.state.text, username: this.props.username});
+      // reset the textbox
+      this.setState({text: ''});
     }
     const client = 'client received from Mutationn'
     return this.form(sendMessage, client);

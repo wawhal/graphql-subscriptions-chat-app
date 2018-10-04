@@ -87,7 +87,7 @@ body
   bottom: 0;
   width: 75%;
   background-color: #fff;
-  padding: 1%;
+  padding-bottom: 10px;
 }
 
 .textbox {

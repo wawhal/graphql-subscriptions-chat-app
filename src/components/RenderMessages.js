@@ -11,9 +11,21 @@ export default class RenderMessages extends React.Component {
     this.state = {
       messages: [
         {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message one', id: 1},
         {'username': 'user1', text: 'message two', id: 2}
       ],
-      newMessages: [],
+      newMessages: [
+        {'username': 'user2', text: 'message three', id: 2}
+      ],
       error: null,
     }
   }
@@ -34,7 +46,7 @@ export default class RenderMessages extends React.Component {
     // if there are no new messages in the state, scroll to bottom
     if (this.state.newMessages.length === 0) {
       this.scrollToBottom();
-    } 
+    }
   }
 
   componentWillUnmount() {
@@ -42,6 +54,16 @@ export default class RenderMessages extends React.Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
+  // add message to state when text is entered
+  mutationCallback = (message) => {
+    const messages = [ ...this.state.messages, ...this.state.newMessages ];
+    messages.push(message);
+    this.setState({
+      ...this.state,
+      messages,
+      newMessages: []
+    });
+  }
 
   // scroll to bottom
   scrollToBottom = () => {

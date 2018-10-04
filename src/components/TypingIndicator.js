@@ -7,7 +7,7 @@ import { getUserTyping } from '../graphqlQueries';
 class TypingIndicator extends React.Component {
   render() {
     const data = {
-      user_typing: []
+      user_typing: [{username: 'user2'}]
     };
     return (
       <div className="typingIndicator">

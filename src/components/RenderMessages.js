@@ -1,39 +1,18 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import '../App.js';
 import Banner from './Banner';
 import MessageList from './MessageList';
-
-const fetchMessages = gql`
-  query ($last_received_id: Int, $last_received_ts: timestamptz){
-    message (
-      order_by: timestamp_asc
-      where: {
-        _and: {
-          id: {
-            _neq: $last_received_id
-          },
-          timestamp: {
-            _gte: $last_received_ts
-          }
-        }
-
-      }
-    ) {
-      id
-      text
-      username
-      timestamp
-    }
-  }
-`;
+import { fetchMessages } from '../graphqlQueries';
 
 export default class RenderMessages extends React.Component {
   constructor() {
     super();
     this.state = {
-      messages: [],
+      messages: [
+        {'username': 'user1', text: 'message one', id: 1},
+        {'username': 'user1', text: 'message two', id: 2}
+      ],
       newMessages: [],
       error: null,
     }
@@ -52,6 +31,7 @@ export default class RenderMessages extends React.Component {
 
 
   componentDidUpdate() {
+    // if there are no new messages in the state, scroll to bottom
     if (this.state.newMessages.length === 0) {
       this.scrollToBottom();
     } 
@@ -62,82 +42,6 @@ export default class RenderMessages extends React.Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
-  // get appropriate query variables
-  getLastReceivedVars = () => {
-    const { messages, newMessages } = this.state;
-    if (newMessages.length === 0) {
-      if (messages.length !== 0) {
-        return {
-          last_received_id: messages[messages.length - 1].id,
-          last_received_ts: messages[messages.length - 1].timestamp
-        }
-      } else {
-        return {
-          last_received_id: -1,
-          last_received_ts: "2018-08-21T19:58:46.987552+00:00"
-        }
-      }
-    } else {
-      return {
-        last_received_id: newMessages[newMessages.length - 1].id,
-        last_received_ts: newMessages[newMessages.length - 1].timestamp
-      }
-    }
-  }
-
-  // add new (unread) messages to state
-  addNewMessages = (messages) => {
-    const newMessages = [...this.state.newMessages];
-    messages.forEach((m) => {
-      // do not add new messages from self
-      if (m.username !== this.props.username) {
-        newMessages.push(m);
-      }
-    });
-    this.setState({
-      ...this.state,
-      newMessages
-    })
-  }
-
-  // add old (read) messages to state
-  addOldMessages = (messages) => {
-    const oldMessages = [ ...this.state.messages, ...messages];
-    this.setState({
-      ...this.state,
-      messages: oldMessages,
-      newMessages: []
-    })
-  }
-
-  // add message to state when text is entered
-  mutationCallback = (message) => {
-    const messages = [ ...this.state.messages, ...this.state.newMessages ];
-    messages.push(message);
-    this.setState({
-      ...this.state,
-      messages,
-      newMessages: []
-    });
-  }
-
-  // custom refetch to be passed to parent for refetching on event occurance
-  refetch = async() => {
-    if (!this.state.loading) {
-      const resp = await this.state.refetch(this.getLastReceivedVars());
-      if (resp.data) {
-        if (!this.isViewScrollable()) {
-          this.addOldMessages(resp.data.message);
-        } else {
-          if (this.state.bottom) {
-            this.addOldMessages(resp.data.message);
-          } else {
-            this.addNewMessages(resp.data.message);
-          }
-        }
-      }
-    }
-  }
 
   // scroll to bottom
   scrollToBottom = () => {
@@ -195,40 +99,7 @@ export default class RenderMessages extends React.Component {
       this.props.setRefetch(this.refetch);
     }
     return (
-      <div id="chatbox">
-        <Query
-          query={fetchMessages}
-          variables={this.getLastReceivedVars()}
-        >
-          {
-            ({ data, loading, error, refetch}) => {
-              if (loading) {
-                return null;
-              }
-              if (error) {
-                return "Error: " + error;
-              }
-              // set refetch in local state to make a custom refetch
-              if (!this.state.refetch) {
-                this.setState({
-                  ...this.state,
-                  refetch
-                });
-              }
-              const receivedMessages = data.message;
-
-              // load all messages to state in the beginning
-              if (receivedMessages.length !== 0) {
-                if (messages.length === 0) {
-                  this.addOldMessages(receivedMessages);
-                }
-              }
-
-              // return null; real rendering happens below
-              return null;
-            }
-          }
-        </Query>
+      <div id="chatbox"> 
         { /* show "unread messages" banner if not at bottom */}
         {
           (!bottom && newMessages.length > 0 && this.isViewScrollable()) ?

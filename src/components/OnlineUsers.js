@@ -1,18 +1,7 @@
 import React from 'react';
 import { Subscription } from 'react-apollo';
 import moment from 'moment';
-import gql from 'graphql-tag';
-
-const fetchOnlineUsersSubscription = gql`
-  subscription {
-    user_online (
-      order_by: username_asc
-    ) {
-      id
-      username
-    }
-  }
-`;
+import { fetchOnlineUsersSubscription } from '../graphqlQueries';
 
 class OnlineUsers extends React.Component {
   
@@ -25,32 +14,30 @@ class OnlineUsers extends React.Component {
   }
 
   render() {
+    const data = {
+      user_online: [
+        {
+          id: 1,
+          username: 'user1'
+        },
+        {
+          id: 2,
+          username: 'user2'
+        } 
+      ]
+    }
     return (
       <div className="onlineUsers">
-        <Subscription
-          subscription={fetchOnlineUsersSubscription}
-        >
-          {
-            ({data, error, loading }) => {
-              if (loading) {
-                return null;
-              }
-              if (error) { return "Error loading online users"; }
-              return (
-                <div>
-                 <p className="userListHeading"> Online Users ({!data.user_online ? 0 : data.user_online.length})</p>
-                  <ul className="userList">
-                    { 
-                      data.user_online.map((u) => {
-                        return <li key={u.id}>{u.username}</li>
-                      })
-                    }
-                  </ul>
-                </div>
-              );
+        <div>
+         <p className="userListHeading"> Online Users ({!data.user_online ? 0 : data.user_online.length})</p>
+          <ul className="userList">
+            { 
+              data.user_online.map((u) => {
+                return <li key={u.id}>{u.username}</li>
+              })
             }
-          }
-        </Subscription>
+          </ul>
+        </div>
       </div>
     );
   }

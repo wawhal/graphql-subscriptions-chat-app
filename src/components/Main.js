@@ -9,8 +9,8 @@ export default class Main extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoggedIn: false,
-      username:"",
+      isLoggedIn: true,
+      username:"bazooka",
       userId: null
     };
   } 

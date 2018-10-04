@@ -1,34 +1,7 @@
 import React from 'react';
 import { Subscription } from 'react-apollo';
-import gql from 'graphql-tag';
 import ChatWrapper from './ChatWrapper';
-
-const subscribeToNewMessages = gql`
-  subscription {
-    message ( order_by: id_desc limit: 1) {
-      id
-      username
-      text
-      timestamp
-    } }
-`;
-
-const emitOnlineEvent = gql`
-  mutation ($userId:Int!){
-    update_user (
-      _set: {
-        last_seen: "now()"
-      }
-      where: {
-        id: {
-          _eq: $userId
-        }
-      }
-    ) {
-      affected_rows
-    }
-  }
-`;
+import { subscribeToNewMessages, emitOnlineEvent } from '../graphqlQueries';
 
 class Chat extends React.Component {
 
@@ -71,6 +44,7 @@ class Chat extends React.Component {
   */
   render () {
     const { refetch, username } = this.state;
+    const data = {message: 'hey'} ;
     return (
       <div>
         <Subscription

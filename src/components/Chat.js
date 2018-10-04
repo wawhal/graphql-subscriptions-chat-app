@@ -19,23 +19,7 @@ class Chat extends React.Component {
       ...this.state,
       refetch
     })
-  }
-
-
-  async componentDidMount() {
-    // Emit and event saying the user is online every 5 seconds
-    setInterval(
-      async () => {
-        await this.props.client.mutate({
-          mutation: emitOnlineEvent,
-          variables: {
-            userId: this.props.userId
-          }
-        });
-      },
-      3000 
-    );
-  }
+  } 
 
   /*
     Subscription is used only for event notification
@@ -47,22 +31,7 @@ class Chat extends React.Component {
     const data = {message: 'hey'} ;
     return (
       <div>
-        <Subscription
-          subscription={subscribeToNewMessages}
-        >
-          {
-            ({data, error, loading}) => {
-              if (error || (data && data.message === null)) {
-                console.error(error || `Unexpected response: ${data}`);
-                return "Error";
-              }
-              if (refetch) {
-                refetch();
-              }
-              return null;
-            }
-          }
-        </Subscription>
+        {/*Subscribe to new messages*/}
         <ChatWrapper
           refetch={refetch}
           setRefetch={this.setRefetch}

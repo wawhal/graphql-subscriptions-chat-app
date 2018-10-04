@@ -1,6 +1,5 @@
 import React from 'react';
 import '../App.css';
-import { Mutation } from 'react-apollo';
 import { addUser } from '../graphqlQueries';
 
 const LoginComponent = (props) => {

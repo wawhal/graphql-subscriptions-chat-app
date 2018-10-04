@@ -1,5 +1,4 @@
 import React from 'react';
-import { Subscription } from 'react-apollo';
 import moment from 'moment';
 import { fetchOnlineUsersSubscription } from '../graphqlQueries';
 

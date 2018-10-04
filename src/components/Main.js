@@ -10,7 +10,7 @@ export default class Main extends React.Component {
     super();
     this.state = {
       isLoggedIn: true,
-      username:"bazooka",
+      username: "test",
       userId: null
     };
   } 
@@ -46,20 +46,11 @@ export default class Main extends React.Component {
               login={this.login}
             />
           ) : (
-            <ApolloConsumer>
-              {
-                (client) => {
-                  return (
-                    <Chat
-                      userId={userId}
-                      username={username}
-                      client={client}
-                    />
-                  );
-                }
-              }
-                
-            </ApolloConsumer>
+            <Chat
+              userId={userId}
+              username={username}
+              client={'Apollo client from consumer'}
+            />
           )
         }
       </div>
